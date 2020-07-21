@@ -43,6 +43,15 @@ namespace ViewingsApp.Services
             }
             return false;
         }
+        public bool invalidAgentId(BookingRequest bookingRequest)
+        {
+            var agentId = bookingRequest.AgentId;
+            if(agentId > 0 && agentId < 4)
+            {
+                return false;
+            }
+            return true;
+        }
 
         public BookingValidation ValidateBooking(BookingRequest bookingRequest, IEnumerable<Agent> allAgents, IEnumerable<Property> allProperties)
         {
@@ -72,6 +81,15 @@ namespace ViewingsApp.Services
                {
                 IsValid = false,
                 ErrorMessage = "You must provide a phone number"
+               };
+           }
+
+           if(invalidAgentId(bookingRequest))
+           {
+               return new BookingValidation
+               {
+                   IsValid = false,
+                   ErrorMessage = "This is not a valid Agent Id"
                };
            }
 
