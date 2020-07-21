@@ -34,6 +34,16 @@ namespace ViewingsApp.Services
             return false;
         }
 
+        public bool noPhoneNumber(BookingRequest bookingRequest)
+        {
+            var phonenumber = bookingRequest.PhoneNumber;
+            if (phonenumber == "")
+            {
+                return true;
+            }
+            return false;
+        }
+
         public BookingValidation ValidateBooking(BookingRequest bookingRequest, IEnumerable<Agent> allAgents, IEnumerable<Property> allProperties)
         {
             if(noName(bookingRequest))
@@ -53,6 +63,15 @@ namespace ViewingsApp.Services
                {
                    IsValid = false,
                    ErrorMessage = "You must provide an email address"
+               };
+           }
+
+           if(noPhoneNumber(bookingRequest))
+           {
+               return new BookingValidation
+               {
+                IsValid = false,
+                ErrorMessage = "You must provide a phone number"
                };
            }
 
