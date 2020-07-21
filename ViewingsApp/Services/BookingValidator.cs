@@ -53,6 +53,18 @@ namespace ViewingsApp.Services
             return true;
         }
 
+            public bool invalidPropertyId(BookingRequest bookingRequest)
+        {
+            var propertyId = bookingRequest.PropertyId;
+            if(propertyId > 0 && propertyId < 7)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        
+
         public BookingValidation ValidateBooking(BookingRequest bookingRequest, IEnumerable<Agent> allAgents, IEnumerable<Property> allProperties)
         {
             if(noName(bookingRequest))
@@ -92,6 +104,16 @@ namespace ViewingsApp.Services
                    ErrorMessage = "This is not a valid Agent Id"
                };
            }
+
+             if(invalidPropertyId(bookingRequest))
+           {
+               return new BookingValidation
+               {
+                   IsValid = false,
+                   ErrorMessage = "This is not a valid Property Id"
+               };
+           }
+
 
            return new BookingValidation
            {

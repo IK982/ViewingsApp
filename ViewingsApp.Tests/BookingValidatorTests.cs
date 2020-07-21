@@ -154,5 +154,29 @@ namespace ViewingsApp.Tests
             bookingValidation.IsValid.Should().BeFalse();
             bookingValidation.ErrorMessage.Should().Be("This is not a valid Agent Id");
         }
+
+                      [Test]
+        public void ShouldFailIfPropertyIdIsInvalid()
+        {
+            // Arrange
+            var bookingRequest = new BookingRequest
+            {
+                AgentId  = 1,
+                PropertyId = 0,
+                Name = "Rebecca",
+                EmailAddress = "rebecca@hotmail.com",
+                StartsAt = DateTime.Now.AddHours(2),
+                EndsAt = DateTime.Now.AddHours(3),
+                PhoneNumber = "0300 547 873"
+            };
+            var bookingValidator = new BookingValidator();
+
+            // Act
+            var bookingValidation = bookingValidator.ValidateBooking(bookingRequest, _agents, _properties);
+
+            // Assert
+            bookingValidation.IsValid.Should().BeFalse();
+            bookingValidation.ErrorMessage.Should().Be("This is not a valid Property Id");
+        }
     }
 }
