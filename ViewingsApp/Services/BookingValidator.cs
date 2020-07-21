@@ -12,13 +12,58 @@ namespace ViewingsApp.Services
     
     public class BookingValidator : IBookingValidator
     {
+
+        public bool noName(BookingRequest bookingRequest)
+        {
+            var name = bookingRequest.Name;
+            if(name == "")
+            {
+                return true;
+            }
+
+                return false;
+        }
+
+        public bool noEmail(BookingRequest bookingRequest)
+        {
+            var email = bookingRequest.EmailAddress;
+            if (email == "")
+            {
+                return true;
+            }
+            return false;
+        }
+
         public BookingValidation ValidateBooking(BookingRequest bookingRequest, IEnumerable<Agent> allAgents, IEnumerable<Property> allProperties)
         {
-            return new BookingValidation
+            if(noName(bookingRequest))
             {
-                IsValid = true,
-                ErrorMessage = ""
-            };
+
+                return new BookingValidation
+                {
+                    IsValid = false,
+                    ErrorMessage = "You must provide a name"
+                };
+            }
+           
+           if(noEmail(bookingRequest))
+           {
+
+               return new BookingValidation
+               {
+                   IsValid = false,
+                   ErrorMessage = "You must provide an email address"
+               };
+           }
+
+           return new BookingValidation
+           {
+               IsValid = true,
+               ErrorMessage = ""
+           };
+        
+
         }
+
     }
 }
