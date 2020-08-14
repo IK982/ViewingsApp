@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System;
 
 namespace ViewingsApp.Models.Database
 {
@@ -15,5 +16,14 @@ namespace ViewingsApp.Models.Database
         public IEnumerable<Booking> Bookings { get; set; }
         public int StartTime { get; set; }
         public int EndTime { get; set; }
+
+        public bool IsFreeAt(DateTime viewingStartTime)
+        {
+            if(viewingStartTime.Hour < StartTime || viewingStartTime.Hour > EndTime)
+            {
+                return false;
+            }
+            return true;
+        }
     }
 }
